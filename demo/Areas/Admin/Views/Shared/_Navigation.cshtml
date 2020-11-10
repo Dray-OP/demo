@@ -1,0 +1,168 @@
+﻿<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="~/assets/admin/index3.html" class="brand-link">
+        <img src="~/assets/admin/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">Admin</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="~/assets/admin/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Nhật Đẹp Trai Vãi</a>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+    with font-awesome or any other icon font library -->
+                <li class="nav-item">
+                    <a href="/admin/home" class="nav-link">
+                        <i class="nav-icon fa fa-home"></i>
+                        <p>
+                            Trang Chủ
+                        </p>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-user"></i>
+                        <p>
+                            Hệ thống
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/Category/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Nhóm người dùng</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/user/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>User</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-comment"></i>
+                        <p>
+                            Tin Tức
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/Category/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh mục</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Content/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tin tức</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-bell"></i>
+                        <p>
+                            Sản Phẩm
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/ProductCategory/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh mục sản phẩm</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Product/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Sản Phẩm</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fa fa-bar-chart"></i>
+                        <p>
+                            Quản Lý Chung
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/About/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Giới thiệu</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Footer/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Footer</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Footer/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Menu</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Footer/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Slide</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Footer/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Phản hồi</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                @*<li class="nav-header">LABELS</li>*@
+
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
