@@ -7,21 +7,16 @@ using System.Threading.Tasks;
 
 namespace Model.Dao
 {
-    public class CategoryDao
+    public class SlideDao
     {
         OnlineShopDbContext db = null;
-        public CategoryDao()
+        public SlideDao()
         {
             db = new OnlineShopDbContext();
         }
-        public List<Category> ListAll()
+        public List<Slide> ListAll()
         {
-            return db.Categories.Where(x => x.Status == true).ToList();
+            return db.Slides.Where(x => x.Status == true).OrderBy(x => x.DisplayOrder).ToList();
         }
-        public ProductCategory ViewDetail(long id)
-        {
-            return db.ProductCategories.Find(id);
-        }
-
     }
 }

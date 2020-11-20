@@ -12,6 +12,10 @@ namespace demo.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            ViewBag.Slides = new SlideDao().ListAll();
+            var productDao = new ProductDao();
+            ViewBag.ListNewProducts = productDao.ListNewProduct(4);
+            ViewBag.ListFeatureProducts = productDao.ListFeatureProduct(4);
             return View();
         }
 
