@@ -33,9 +33,18 @@ namespace demo
                defaults: new { controller = "About", action = "Index", id = UrlParameter.Optional },
                namespaces: new[] { "demo.Controllers" }
                );
-
-
-
+            routes.MapRoute(
+               name: "Cart",
+               url: "gio-hang",
+               defaults: new { controller = "Cart", action = "Index", id = UrlParameter.Optional },
+               namespaces: new[] { "demo.Controllers" }
+               );
+            routes.MapRoute(
+               name: "Add card",
+               url: "them-gio-hang",
+               defaults: new { controller = "Cart", action = "AddItem", id = UrlParameter.Optional },
+               namespaces: new[] { "demo.Controllers" }
+               );
 
             // defaut luôn để cuối cùng
             routes.MapRoute(
