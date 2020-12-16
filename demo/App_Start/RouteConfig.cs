@@ -33,6 +33,7 @@ namespace demo
                defaults: new { controller = "About", action = "Index", id = UrlParameter.Optional },
                namespaces: new[] { "demo.Controllers" }
                );
+            // cart item
             routes.MapRoute(
                name: "Cart",
                url: "gio-hang",
@@ -45,16 +46,28 @@ namespace demo
                defaults: new { controller = "Cart", action = "AddItem", id = UrlParameter.Optional },
                namespaces: new[] { "demo.Controllers" }
                );
+            routes.MapRoute(
+               name: "Pay success",
+               url: "hoan-thanh",
+               defaults: new { controller = "Cart", action = "Success", id = UrlParameter.Optional },
+               namespaces: new[] { "demo.Controllers" }
+               );
 
+            routes.MapRoute(
+              name: "Payment",
+              url: "thanh-toan",
+              defaults: new { controller = "Cart", action = "Payment", id = UrlParameter.Optional },
+              namespaces: new[] { "demo.Controllers" }
+              );
             // defaut luôn để cuối cùng
             routes.MapRoute(
                 name: "Default", // mặc định thì vào đây
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] {"demo.Controllers"}
+                namespaces: new[] { "demo.Controllers" }
                 );
 
-            
+
 
         }
     }

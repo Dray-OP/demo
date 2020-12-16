@@ -1,5 +1,6 @@
 ﻿using demo.Models;
 using Model.Dao;
+using Model.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,23 +27,54 @@ namespace demo.Controllers
             }
             return View(list);
         }
+
+        public JsonResult DeleteAll()
+        {
+            Session[CartSession] = null;
+
+            return Json(new
+            {
+                status = true
+            });
+        }
+        public JsonResult Delete(long id)
+        {
+            var sessionCart = (List<CartItem>)Session[CartSession];
+            sessionCart.RemoveAll(x => x.Product.ID == id);
+            Session[CartSession] = sessionCart;
+            return Json(new
+            {
+                status = true
+            });
+        }
+
+
+
         // trả về một đối tượng cartModel trong ajax
         public JsonResult Update(string cartModel)
         {
             // deser convert string -> json  
             // ser json  -> string
 
-            // đang là 1 string json
+            // đang là 1 string json đã thay đổi
             var jsonCart = new JavaScriptSerializer().Deserialize<List<CartItem>>(cartModel);
             var sessionCart = (List<CartItem>)Session[CartSession];
 
             foreach (var item in sessionCart)
             {
-
+                var jsonItem = jsonCart.SingleOrDefault(x => x.Product.ID == item.Product.ID);
+                if(jsonItem != null)
+                {
+                    item.Quantity = jsonItem.Quantity;
+                }
             }
-
-            return View();
+            return Json(new
+            {
+                status = true
+            });
         }
+        
+
 
         public ActionResult AddItem(long productID, int quantity)
         {
@@ -90,5 +122,55 @@ namespace demo.Controllers
             }
             return RedirectToAction("Index");
         }
-    }
+        [HttpGet]
+        public ActionResult Payment()
+        {
+            var cart = Session[CartSession];
+            var list = new List<CartItem>();
+            if (cart != null)
+            {
+                list = (List<CartItem>)cart;
+            }
+            return View(list);
+        }
+        [HttpPost]
+        public ActionResult Payment(string shipname, string mobile,string address, string email)
+        {
+            var order = new Order();
+            order.CreatedDate = DateTime.Now;
+            order.ShipName = shipname;
+            order.ShipMobile = mobile;
+            order.ShipAddress = address;
+            order.ShipEmail = email;
+
+            var id = new OrderDao().Insert(order);
+            var cart = (List <CartItem>) Session[CartSession];
+            var detailDao = new OrderDetailDao();
+
+            try
+            {
+                foreach (var item in cart)
+                {
+                    var orderDetail = new OrderDetail();
+                    orderDetail.ProductID = item.Product.ID;
+                    orderDetail.OrderID = id;
+                    orderDetail.Price = item.Product.Price;
+                    orderDetail.Quantity = item.Product.Quantity;
+                    detailDao.Insert(orderDetail);
+                }
+            }
+            catch (Exception)
+            {
+                //ghi log
+                return Redirect("/loi-thanh-toan"); 
+            }
+            return Redirect("/hoan-thanh");
+        }
+
+        public ActionResult Success()
+        {
+
+            return View();
+        }
+    }   
 }

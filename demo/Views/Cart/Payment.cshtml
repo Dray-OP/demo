@@ -1,13 +1,9 @@
 ﻿@model List<demo.Models.CartItem>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Thanh toán";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@section jsFooter{
-    <script src="~/assets/client/js/controller/cartController.js"></script>
-}
-
 
 <div class="content">
     <div class="section group">
@@ -40,18 +36,32 @@
                     }
                 </tbody>
             </table>
-
-            <button id="btnContinue"class="btn btn-primary">Tiếp tục mua hàng</button>
-            <button id="btnUpdate"  class="btn btn-secondary">Cập nhật giỏ hàng</button>
-            <button id="btnDelete"  class="btn btn-danger">Xóa giỏ hang</button>
-            <button id="btnPayment" class="btn btn-success">Thanh toán</button>
         }
-        else
-        {
-            <div>
-                <span class="alert alert-danger">chưa có sản phẩm nào trong giỏ hàng</span>
-            </div>
-        }
+       
 
+    </div>
+    <div class="section group">
+        <div class="col-md-6">
+            @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Người nhận</label>
+                    <input name="shipName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Điện thoại</label>
+                    <input name="mobile" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ</label>
+                    <input name="address" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input name="email" class="form-control" />
+                </div>
+                <button type="submit" class="btn">Gửi đơn hàng</button>
+            };
+        </div>
     </div>
 </div>
