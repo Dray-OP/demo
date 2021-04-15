@@ -28,6 +28,7 @@
                             <div class="col-lg-12 d-flex">
                                 <div class="col-md-4">
                                     @*searchString được chuyển vào làm tham số*@
+                                    @* name phải giống tham số bên controller *@
                                     <input type="text" name="searchString" value="@ViewBag.searchString" class="form-control" />
                                 </div>
                                 <div class="col-md-4">
@@ -64,13 +65,21 @@
                                     <td>@item.CreatedDate</td>
                                     <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status?"Kích hoạt":"Khóa")</a></td>
                                     <td>
-                                        <a href="/Admin/User/Edit/@item.ID">Sửa</a>
+                                        @* cách 1 *@
+                                        @Html.ActionLink("Edit", "Edit", new { id = @item.ID })
+                                        @* cách 2 *@
+                                        @* <a href="/Admin/User/Edit/@item.ID">Sửa</a>*@
+                                        @* cách 3 *@
+                                        @*<form action="/Admin/User/Edit/" method="post">
+                                            <a href="javascript:;" onclick="parentNode.submit();">Sửa</a>
+                                            <input type="hidden" name="@item.ID"/>
+                                        </form>*@
                                         |
                                         @*<a href="/Admin/User/Delete/@item.ID">Xóa</a>*@
                                         @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
                                    {
                                        Confirm = "Bạn có muốn xóa bản ghi này?",
-                                       OnComplete = "$('#row_" + @item.ID + "').remove()",
+                                       OnComplete = "$('#row_" + @item.ID + "').remove() ; ",
                                        HttpMethod = "Delete"
                                    })
                                     </td>

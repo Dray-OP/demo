@@ -37,7 +37,7 @@ namespace demo.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult Edit(long id)
+        public ActionResult Edit(int id)
         {
             var dao = new ContentDao();
             var content = dao.GetContent(id);
@@ -52,9 +52,6 @@ namespace demo.Areas.Admin.Controllers
             SetViewBag(content.CategoryID);
             return View();
         }
-
-
-
 
         public void SetViewBag(long? selectedID = null)
         {

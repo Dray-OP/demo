@@ -1,10 +1,10 @@
 ﻿using Model.EF;
-using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace Model.Dao
 {
@@ -18,6 +18,14 @@ namespace Model.Dao
         }
         public long Insert(User entity)
         {
+            foreach (var item in db.Users)
+            {
+                if(item.UserName == entity.UserName)
+                {
+                    return 0;
+                }
+            }
+
             db.Users.Add(entity);
             db.SaveChanges();
             // trả về id khi khởi tạo
@@ -37,8 +45,10 @@ namespace Model.Dao
                 }
                 user.Name = entity.Name;
                 user.Email = entity.Email;
+                //date change
+                //user.CreatedDate = DateTime.Now;
                 user.ModifiedBy = entity.ModifiedBy;
-                user.ModifiedDate = entity.ModifiedDate;
+                user.ModifiedDate = DateTime.Now;
                 //rồi lưu lại
                 db.SaveChanges();
                 return true;
@@ -79,9 +89,13 @@ namespace Model.Dao
             IQueryable<User> model = db.Users;
             if (!string.IsNullOrEmpty(searchString))
             {
-                model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString));
+                model = model.Where(x => x.UserName.Contains(searchString) || x.Name.Contains(searchString) || x.Email.Contains(searchString));
             }
             // thêm else if vào đây nếu có thêm điều kiện
+            //else
+            //{
+            //
+            //}
             return model.OrderByDescending(x=>x.CreatedDate).ToPagedList(page,pageSize);
         }
 

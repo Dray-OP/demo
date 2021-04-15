@@ -3,10 +3,12 @@ using Model.Dao;
 using Model.EF;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Common;
 
 namespace demo.Controllers
 {
@@ -134,11 +136,11 @@ namespace demo.Controllers
             return View(list);
         }
         [HttpPost]
-        public ActionResult Payment(string shipname, string mobile,string address, string email)
+        public ActionResult Payment(string shipName, string mobile,string address, string email)
         {
             var order = new Order();
             order.CreatedDate = DateTime.Now;
-            order.ShipName = shipname;
+            order.ShipName = shipName;
             order.ShipMobile = mobile;
             order.ShipAddress = address;
             order.ShipEmail = email;
@@ -146,6 +148,8 @@ namespace demo.Controllers
             var id = new OrderDao().Insert(order);
             var cart = (List <CartItem>) Session[CartSession];
             var detailDao = new OrderDetailDao();
+
+            decimal total = 0;
 
             try
             {
@@ -157,7 +161,22 @@ namespace demo.Controllers
                     orderDetail.Price = item.Product.Price;
                     orderDetail.Quantity = item.Product.Quantity;
                     detailDao.Insert(orderDetail);
+
+                    total += (item.Product.Price.GetValueOrDefault(0) * item.Quantity);
                 }
+                string content = System.IO.File.ReadAllText(Server.MapPath("~/assets/client/template/neworder.html"));
+
+                content = content.Replace("{{CustomerName}}", shipName);
+                content = content.Replace("{{Phone}}", mobile);
+                content = content.Replace("{{Email}}", email);
+                content = content.Replace("{{Address}}", address);
+                content = content.Replace("{{Total}}", total.ToString("N0"));
+                // toEmail cho quản trị
+                var toEmail = ConfigurationManager.AppSettings["ToEmailAddress"].ToString();
+                // gửi back up cho dray
+                new MailHelper().SendMail(email, "Đơn hàng mới từ OnlineShop dành cho khách hàng", content);
+                // gửi cho người gửi
+                new MailHelper().SendMail(toEmail, "Đơn hàng mới từ OnlineShop dành cho shop quản trị được setting in webconfig", content);
             }
             catch (Exception)
             {

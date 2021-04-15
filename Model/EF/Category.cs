@@ -9,7 +9,7 @@ namespace Model.EF
     [Table("Category")]
     public partial class Category
     {
-        public long ID { get; set; }
+        public int ID { get; set; }
 
         [StringLength(250)]
         public string Name { get; set; }

@@ -52,6 +52,13 @@ namespace demo
                defaults: new { controller = "Cart", action = "Success", id = UrlParameter.Optional },
                namespaces: new[] { "demo.Controllers" }
                );
+            // contact
+            routes.MapRoute(
+               name: "Contact",
+               url: "lien-he",
+               defaults: new { controller = "Contact", action = "Index", id = UrlParameter.Optional },
+               namespaces: new[] { "demo.Controllers" }
+               );
 
             routes.MapRoute(
               name: "Payment",

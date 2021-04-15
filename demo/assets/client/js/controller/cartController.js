@@ -40,8 +40,6 @@
                     }
                 }
             })
-
-
         });
 
         $('#btnDelete').off('click').on('click', function () {

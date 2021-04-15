@@ -150,6 +150,7 @@
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <!-- RenderPage left nav -->
+        <!-- partial view -->
         @RenderPage("_Navigation.cshtml")
 
         <!-- Content Wrapper. Contains page content -->
@@ -158,6 +159,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
+                            <!-- tạo ra 1 cái section ở bên index Home -->
                             <h1>@RenderSection("header", required: true)</h1>
                         </div>
                         <div class="col-sm-6">
@@ -171,15 +173,15 @@
                     </div>
                     @if (TempData["AlertMessage"] != null)
                     {
-                    <div id="AlertBox" class="alert @TempData["AlertType"] hide">
-                        @TempData["AlertMessage"]
-                    </div>
+                        <div id="AlertBox" class="alert @TempData["AlertType"] hide">
+                            @TempData["AlertMessage"]
+                        </div>
                     }
 
                 </div><!-- /.container-fluid -->
             </section>
             @*@if(TempData)*@
-        
+
 
             @RenderBody()
 

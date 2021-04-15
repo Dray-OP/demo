@@ -13,10 +13,11 @@ namespace demo.Areas.Admin.Controllers
     public class UserController : BaseController
     {
         // GET: Admin/User
-        public ActionResult Index(string searchString, int page =1,int pageSize=10)
+        public ActionResult Index(string searchString, int page =1,int pageSize=3)
         {
             var dao = new UserDao();
             var model = dao.ListAllPaging(searchString, page, pageSize);
+            // load trang nó vẫn nó vẫn còn ở input
             ViewBag.searchString = searchString;
             return View(model);
         }
@@ -48,12 +49,13 @@ namespace demo.Areas.Admin.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("","them user không thành cong");
+                    ModelState.AddModelError("","them user thất bại");
                 }
             }
             return RedirectToAction("Create", "User");
         }
         [HttpGet]
+        //[HttpPost]
         public ActionResult Edit(int id)
         {
             var user = new UserDao().ViewDetail(id);
@@ -71,13 +73,12 @@ namespace demo.Areas.Admin.Controllers
                     var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
                     user.Password = encryptedMd5Pas;
                 }
+                //user.CreatedDate = DateTime.Now;
                 // update trả về kiểu bool còn insert trả về kiểu int
                 var rerult = dao.Update(user);
                 if (rerult)
                 {
                     SetAlert("Sửa user thành công", "success");
-
-
                     //chuyen ve trang quan ly
                     return RedirectToAction("Index", "User");
                 }
