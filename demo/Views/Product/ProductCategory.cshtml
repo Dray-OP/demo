@@ -1,7 +1,6 @@
 ﻿@model List<Model.EF.ProductCategory>
-
+<h3>Danh mục sản phẩm</h3>
 <ul>
-    <h3>Danh mục sản phẩm</h3>
     @foreach (var item in Model.Where(x => x.ParentID == null))
     {
         // cho những menu cha nhận được các menu con theo nó

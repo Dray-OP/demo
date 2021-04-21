@@ -40,59 +40,107 @@
                     </div>
                 }
 
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <div class="card-body">
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th>Tài khoản</th>
+                                            <th>Tên</th>
+                                            <th>Email</th>
+                                            <th>Ngày tạo</th>
+                                            <th>Trạng thái</th>
+                                            <th>#</th>
 
-                <!-- ./card-header -->
-                <div class="card-body">
-                    <table class="table table-bordered ">
-                        <thead>
-                            <tr>
-                                <th>Tài khoản</th>
-                                <th>Tên</th>
-                                <th>Email</th>
-                                <th>Ngày tạo</th>
-                                <th>Trạng thái</th>
-                                <th>#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr id="row_@item.ID">
+                                                <td class="userName">@item.UserName</td>
+                                                <td class="name">@item.Name</td>
+                                                <td class="email">@item.Email</td>
+                                                <td class="">@item.CreatedDate</td>
+                                                <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status?"Kích hoạt":"Khóa")</a></td>
+                                                <td><a href="#" class="btn-edit" data-id="@item.ID">demo sửa</a></td>
+                                                <td>
+                                                    @* cách 1 *@
+                                                    @Html.ActionLink("Edit", "Edit", new { id = @item.ID })
+                                                    @* cách 2 *@
+                                                    @* <a href="/Admin/User/Edit/@item.ID">Sửa</a>*@
+                                                    @* cách 3 *@
+                                                    @*<form action="/Admin/User/Edit/" method="post">
+                                    <a href="javascript:;" onclick="parentNode.submit();">Sửa</a>
+                                    <input type="hidden" name="@item.ID"/>
+                                </form>*@
+                                                    |
+                                                    @*<a href="/Admin/User/Delete/@item.ID">Xóa</a>*@
+                                                    @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
+                                               {
+                                                   Confirm = "Bạn có muốn xóa bản ghi này?",
+                                                   OnComplete = "$('#row_" + @item.ID + "').remove() ; ",
+                                                   HttpMethod = "Delete"
+                                               })
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model)
-                            {
-                                <tr id="row_@item.ID">
-                                    <td>@item.UserName</td>
-                                    <td>@item.Name</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.CreatedDate</td>
-                                    <td><a href="#" class="btn-active" data-id="@item.ID">@(item.Status?"Kích hoạt":"Khóa")</a></td>
-                                    <td>
-                                        @* cách 1 *@
-                                        @Html.ActionLink("Edit", "Edit", new { id = @item.ID })
-                                        @* cách 2 *@
-                                        @* <a href="/Admin/User/Edit/@item.ID">Sửa</a>*@
-                                        @* cách 3 *@
-                                        @*<form action="/Admin/User/Edit/" method="post">
-                                            <a href="javascript:;" onclick="parentNode.submit();">Sửa</a>
-                                            <input type="hidden" name="@item.ID"/>
-                                        </form>*@
-                                        |
-                                        @*<a href="/Admin/User/Delete/@item.ID">Xóa</a>*@
-                                        @Ajax.ActionLink("Xóa", "Delete", new { @id = item.ID }, new AjaxOptions
-                                   {
-                                       Confirm = "Bạn có muốn xóa bản ghi này?",
-                                       OnComplete = "$('#row_" + @item.ID + "').remove() ; ",
-                                       HttpMethod = "Delete"
-                                   })
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
+                                @*@searchString để khi chuyển trang vẫn còn viewbag*@
+                                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString }))
 
-                    @*@searchString để khi chuyển trang vẫn còn viewbag*@
-                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.searchString }))
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <div class="col-lg-3">
+                            <form class="form-input">
+                                <input type="text" name="ID" id="id" class="d-none" value="" />
+                                <div class="form-group row">
+                                    <label for="userName" class="col-sm-4 col-form-label">Tài khoản</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="UserName" class="form-control" id="userName" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="name" class="col-sm-4 col-form-label">Tên người dùng</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="Name" class="form-control" id="name" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="address" class="col-sm-4 col-form-label">Địa chỉ</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="Address" class="form-control" id="address">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="email" class="col-sm-4 col-form-label">Email</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" name="Email" class="form-control" id="email">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="phone" class="col-sm-4 col-form-label">Số điện thoại</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="Phone" class="form-control" id="phone">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary confirm-edit" id="">Đồng ý</button>
+                                <button type="reset" class="btn btn-danger">Hủy</button>
+                            </form>
 
+                        </div>
+                    </div>
                 </div>
-                <!-- /.card-body -->
+                <!-- ./card-header -->
+             
+                <div class="html">
+                    
+                </div>
             </div>
             <!-- /.card -->
         </div>

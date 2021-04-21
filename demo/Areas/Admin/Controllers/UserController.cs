@@ -49,6 +49,7 @@ namespace demo.Areas.Admin.Controllers
                 }
                 else
                 {
+                    SetAlert("Thêm user thất bại", "error");
                     ModelState.AddModelError("","them user thất bại");
                 }
             }
@@ -104,8 +105,38 @@ namespace demo.Areas.Admin.Controllers
             {
                 status = result
             });
-            //return Json(result);
 
+        }
+        [HttpPost]
+        public JsonResult FindEmpoyee(int id) // cùng kiểu với user trong EF
+        {
+            var result = new UserDao().ViewDetail(id);
+            return Json(result);
+            //return Json(result);
+        }
+
+        [HttpPost]
+        public JsonResult EditEmpoloyee(User user)//user là cái người dùng truyền vào
+        {
+            
+                var dao = new UserDao();
+                //if (!string.IsNullOrEmpty(user.Password))
+                //{
+                //    var encryptedMd5Pas = Encryptor.MD5Hash(user.Password);
+                //    user.Password = encryptedMd5Pas;
+                //}
+                //user.CreatedDate = DateTime.Now;
+                // update trả về kiểu bool còn insert trả về kiểu int
+                var rerult = dao.Update(user);
+                if (rerult)
+                {
+                    //SetAlert("Sửa user thành công", "success");
+                }
+                else
+                {
+
+                }
+            return Json(user);
         }
     }
 }
